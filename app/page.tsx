@@ -1,198 +1,541 @@
 "use client";
 
-import React, { useState } from 'react';
-import { Calendar, Phone, Shield, Award, Clock, Star, CheckCircle, ChevronRight, Menu, X, ArrowRight } from 'lucide-react';
+import { useEffect, useState } from "react";
+import {
+  ArrowRight,
+  Building2,
+  ChevronRight,
+  Coffee,
+  Compass,
+  MapPin,
+  Menu,
+  MessageCircle,
+  Search,
+  Sparkles,
+  Stethoscope,
+  Store,
+  TrendingUp,
+  UtensilsCrossed,
+  X,
+  Zap,
+} from "lucide-react";
+
+const CATEGORIES = [
+  {
+    icon: UtensilsCrossed,
+    title: "Restaurants",
+    description: "Fine dining, street food, and hidden gems.",
+    count: "2,400+",
+    accent: "from-amber-500/20 to-orange-600/5",
+    iconBg: "bg-amber-500/15 text-amber-400",
+  },
+  {
+    icon: Stethoscope,
+    title: "Clinics",
+    description: "Dental, aesthetic, and wellness centers on one map.",
+    count: "890+",
+    accent: "from-emerald-500/20 to-teal-600/5",
+    iconBg: "bg-emerald-500/15 text-emerald-400",
+  },
+  {
+    icon: Coffee,
+    title: "Cafés",
+    description: "Third-wave coffee, coworking spaces, and boutique venues.",
+    count: "1,650+",
+    accent: "from-rose-500/20 to-pink-600/5",
+    iconBg: "bg-rose-500/15 text-rose-400",
+  },
+  {
+    icon: Store,
+    title: "Retail",
+    description: "Luxury retail, boutiques, and local designers.",
+    count: "3,100+",
+    accent: "from-violet-500/20 to-purple-600/5",
+    iconBg: "bg-violet-500/15 text-violet-400",
+  },
+  {
+    icon: Building2,
+    title: "Hotels",
+    description: "Boutique hotels, resorts, and business travel stays.",
+    count: "420+",
+    accent: "from-sky-500/20 to-blue-600/5",
+    iconBg: "bg-sky-500/15 text-sky-400",
+  },
+  {
+    icon: Zap,
+    title: "Services",
+    description: "Salons, spas, fitness, and premium lifestyle services.",
+    count: "1,200+",
+    accent: "from-cyan-500/20 to-indigo-600/5",
+    iconBg: "bg-cyan-500/15 text-cyan-400",
+  },
+];
+
+const STATS = [
+  { value: "12K+", label: "Listed Businesses" },
+  { value: "48", label: "Cities" },
+  { value: "4.8", label: "Average Rating" },
+];
+
+const WHATSAPP_NUMBER = "905551234567";
+const WHATSAPP_MESSAGE = encodeURIComponent(
+  "Hello Gladiator! I'd like to learn more about the platform."
+);
 
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
-  };
+  useEffect(() => {
+    setVisible(true);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans">
-      {/* HEADER / NAVIGATION */}
-      <header className="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">D</div>
-            <span className="text-xl font-bold tracking-tight text-slate-900">DENTAL<span className="text-blue-600">PREMIUM</span></span>
-          </div>
-          <nav className="hidden md:flex items-center gap-8 font-medium text-slate-600">
-            <a href="#services" className="hover:text-blue-600 transition">Services</a>
-            <a href="#why-us" className="hover:text-blue-600 transition">Why Us</a>
-            <a href="#testimonials" className="hover:text-blue-600 transition">Reviews</a>
-            <a href="#booking" className="bg-blue-600 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700 transition shadow-sm shadow-blue-100">Book Appointment</a>
-          </nav>
-          <button className="md:hidden p-2 text-slate-600" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-        {isMenuOpen && (
-          <div className="md:hidden bg-white border-b border-slate-100 px-4 py-4 flex flex-col gap-4 font-medium animate-fadeIn">
-            <a href="#services" onClick={() => setIsMenuOpen(false)}>Services</a>
-            <a href="#why-us" onClick={() => setIsMenuOpen(false)}>Why Us</a>
-            <a href="#testimonials" onClick={() => setIsMenuOpen(false)}>Reviews</a>
-            <a href="#booking" className="bg-blue-600 text-white text-center py-3 rounded-xl" onClick={() => setIsMenuOpen(false)}>Book Appointment</a>
-          </div>
-        )}
-      </header>
+    <>
+      <style jsx global>{`
+        @keyframes fade-up {
+          from {
+            opacity: 0;
+            transform: translateY(24px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        @keyframes float {
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-8px);
+          }
+        }
+        @keyframes shimmer {
+          0% {
+            background-position: -200% center;
+          }
+          100% {
+            background-position: 200% center;
+          }
+        }
+        @keyframes pulse-ring {
+          0% {
+            transform: scale(1);
+            opacity: 0.6;
+          }
+          100% {
+            transform: scale(1.4);
+            opacity: 0;
+          }
+        }
+        .animate-fade-up {
+          animation: fade-up 0.8s ease-out forwards;
+        }
+        .animate-fade-in {
+          animation: fade-in 1s ease-out forwards;
+        }
+        .animate-float {
+          animation: float 4s ease-in-out infinite;
+        }
+        .animate-shimmer {
+          background-size: 200% auto;
+          animation: shimmer 4s linear infinite;
+        }
+        .animate-pulse-ring::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          border: 2px solid #d4af37;
+          animation: pulse-ring 2s ease-out infinite;
+        }
+        .delay-100 {
+          animation-delay: 0.1s;
+        }
+        .delay-200 {
+          animation-delay: 0.2s;
+        }
+        .delay-300 {
+          animation-delay: 0.3s;
+        }
+        .delay-400 {
+          animation-delay: 0.4s;
+        }
+        .delay-500 {
+          animation-delay: 0.5s;
+        }
+        .opacity-0-start {
+          opacity: 0;
+        }
+      `}</style>
 
-      {/* HERO SECTION */}
-      <section className="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28 bg-gradient-to-b from-blue-50/50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold tracking-wide uppercase">
-                <Star size={16} className="fill-current" /> Top Rated Dental Care in US
+      <div className="min-h-screen bg-[#0a0a0f] text-zinc-100 antialiased">
+        {/* Header */}
+        <header className="fixed top-0 z-50 w-full border-b border-white/5 bg-[#0a0a0f]/80 backdrop-blur-xl">
+          <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+            <a href="#" className="flex items-center gap-2.5">
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-[#d4af37] to-[#8b6914] text-sm font-black tracking-tighter text-[#0a0a0f]">
+                G
+              </span>
+              <span className="text-lg font-bold tracking-wide">
+                GLADIATOR
+                <span className="text-[#d4af37]">.</span>
+              </span>
+            </a>
+
+            <nav className="hidden items-center gap-8 md:flex">
+              <a
+                href="#categories"
+                className="text-sm text-zinc-400 transition hover:text-white"
+              >
+                Categories
+              </a>
+              <a
+                href="#discover"
+                className="text-sm text-zinc-400 transition hover:text-white"
+              >
+                Discover
+              </a>
+              <a
+                href="#join"
+                className="text-sm text-zinc-400 transition hover:text-white"
+              >
+                List Your Business
+              </a>
+              <a
+                href="#join"
+                className="rounded-full bg-gradient-to-r from-[#d4af37] to-[#b8860b] px-5 py-2 text-sm font-semibold text-[#0a0a0f] transition hover:brightness-110"
+              >
+                Join the Platform
+              </a>
+            </nav>
+
+            <button
+              type="button"
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="rounded-lg p-2 text-zinc-400 transition hover:bg-white/5 hover:text-white md:hidden"
+              aria-label="Menu"
+            >
+              {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
+
+          {menuOpen && (
+            <div className="animate-fade-in border-t border-white/5 bg-[#0a0a0f] px-4 py-4 md:hidden">
+              <nav className="flex flex-col gap-3">
+                <a
+                  href="#categories"
+                  onClick={() => setMenuOpen(false)}
+                  className="rounded-lg px-3 py-2 text-zinc-300 hover:bg-white/5"
+                >
+                  Categories
+                </a>
+                <a
+                  href="#discover"
+                  onClick={() => setMenuOpen(false)}
+                  className="rounded-lg px-3 py-2 text-zinc-300 hover:bg-white/5"
+                >
+                  Discover
+                </a>
+                <a
+                  href="#join"
+                  onClick={() => setMenuOpen(false)}
+                  className="rounded-lg bg-[#d4af37] px-3 py-2 text-center font-semibold text-[#0a0a0f]"
+                >
+                  Join the Platform
+                </a>
+              </nav>
+            </div>
+          )}
+        </header>
+
+        {/* Hero */}
+        <section className="relative overflow-hidden pt-16">
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute left-1/2 top-0 h-[600px] w-[800px] -translate-x-1/2 rounded-full bg-[#d4af37]/8 blur-[120px]" />
+            <div className="absolute -left-40 top-40 h-80 w-80 rounded-full bg-violet-600/10 blur-[100px]" />
+            <div className="absolute -right-40 bottom-20 h-80 w-80 rounded-full bg-amber-600/10 blur-[100px]" />
+            <div
+              className="absolute inset-0 opacity-[0.03]"
+              style={{
+                backgroundImage:
+                  "linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px)",
+                backgroundSize: "64px 64px",
+              }}
+            />
+          </div>
+
+          <div className="relative mx-auto max-w-7xl px-4 pb-24 pt-20 sm:px-6 lg:px-8 lg:pb-32 lg:pt-28">
+            <div
+              className={`mx-auto max-w-4xl text-center ${visible ? "animate-fade-up" : "opacity-0-start"}`}
+            >
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#d4af37]/30 bg-[#d4af37]/10 px-4 py-1.5 text-xs font-medium uppercase tracking-widest text-[#d4af37]">
+                <Sparkles className="h-3.5 w-3.5" />
+                Premium Discovery Platform
               </div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-none">
-                Exclusive Smile Care for <span className="text-blue-600">Your Luxury Life</span>
+
+              <h1 className="text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-7xl">
+                Discover the Best in{" "}
+                <span className="bg-gradient-to-r from-[#f5e6b8] via-[#d4af37] to-[#8b6914] bg-clip-text text-transparent animate-shimmer">
+                  Your City
+                </span>
               </h1>
-              <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto lg:mx-0">
-                Experience world-class dental care with high-end technology. Certified American specialists dedicated to creating perfect smiles.
+
+              <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400 sm:text-xl">
+                Gladiator brings together curated businesses—from restaurants and
+                clinics to cafés and boutique shops. Location, services, and
+                experiences, all in one place.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2">
-                <a href="#booking" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-2xl shadow-lg shadow-blue-200 flex items-center justify-center gap-2 transition group">
-                  Schedule Your Visit <ArrowRight size={20} className="group-hover:translate-x-1 transition" />
-                </a>
-                <a href="tel:+123456789" className="bg-white border-2 border-slate-200 text-slate-700 font-semibold px-8 py-4 rounded-2xl flex items-center justify-center gap-2 hover:bg-slate-50 hover:border-slate-300 transition">
-                  <Phone size={20} /> (555) 019-2834
-                </a>
-              </div>
-              <div className="grid grid-cols-3 gap-4 pt-8 border-t border-slate-100 max-w-md mx-auto lg:mx-0">
-                <div><h3 className="text-2xl font-bold text-slate-900">10k+</h3><p className="text-sm text-slate-500">Happy Patients</p></div>
-                <div><h3 className="text-2xl font-bold text-slate-900">99.8%</h3><p className="text-sm text-slate-500">Success Rate</p></div>
-                <div><h3 className="text-2xl font-bold text-slate-900">15+</h3><p className="text-sm text-slate-500">Years Expert</p></div>
-              </div>
-            </div>
-            <div className="lg:col-span-5 relative">
-              <div className="absolute inset-0 bg-blue-400 rounded-3xl rotate-3 opacity-10 scale-105"></div>
-              <div className="relative bg-slate-900 text-white p-8 rounded-3xl shadow-2xl space-y-6 border border-slate-800">
-                <div className="flex items-center justify-between">
-                  <span className="bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Live Clinic Status</span>
-                  <span className="flex h-3 w-3 relative"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span></span>
+
+              {/* Search bar */}
+              <div
+                className={`mx-auto mt-10 max-w-xl ${visible ? "animate-fade-up delay-200 opacity-0-start" : "opacity-0-start"}`}
+              >
+                <div className="group flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 p-2 pl-4 shadow-2xl shadow-black/40 backdrop-blur-sm transition focus-within:border-[#d4af37]/40 focus-within:bg-white/[0.07]">
+                  <Search className="h-5 w-5 shrink-0 text-zinc-500" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search restaurants, clinics, or neighborhoods..."
+                    className="flex-1 bg-transparent py-3 text-sm text-white outline-none placeholder:text-zinc-500"
+                  />
+                  <button
+                    type="button"
+                    className="flex items-center gap-1.5 rounded-xl bg-[#d4af37] px-5 py-3 text-sm font-semibold text-[#0a0a0f] transition hover:brightness-110"
+                  >
+                    Search
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
                 </div>
-                <h3 className="text-xl font-bold">Next Available Appointment</h3>
-                <div className="p-4 bg-slate-800/80 rounded-2xl border border-slate-700/50 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Calendar className="text-blue-400" size={24} />
-                    <div><p className="font-semibold text-sm">Today, Oct 12</p><p className="text-xs text-slate-400">Slots open afternoon</p></div>
+              </div>
+
+              <div
+                className={`mt-10 flex flex-wrap items-center justify-center gap-6 ${visible ? "animate-fade-up delay-300 opacity-0-start" : "opacity-0-start"}`}
+              >
+                {STATS.map((stat) => (
+                  <div key={stat.label} className="text-center">
+                    <p className="text-2xl font-bold text-[#d4af37]">{stat.value}</p>
+                    <p className="mt-0.5 text-xs text-zinc-500">{stat.label}</p>
                   </div>
-                  <a href="#booking" className="text-xs font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1">Select Time <ChevronRight size={14} /></a>
+                ))}
+              </div>
+            </div>
+
+            {/* Floating cards */}
+            <div className="relative mx-auto mt-16 hidden max-w-5xl lg:block">
+              <div className="animate-float absolute -left-4 top-8 rounded-2xl border border-white/10 bg-[#12121a]/90 p-4 shadow-xl backdrop-blur-md">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/20">
+                    <UtensilsCrossed className="h-5 w-5 text-amber-400" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold">La Maison</p>
+                    <p className="text-xs text-zinc-500">Fine Dining · 4.9 ★</p>
+                  </div>
                 </div>
-                <p className="text-xs text-slate-400 text-center">★ Rated 4.9/5 stars by over 2,400+ patients in Los Angeles</p>
+              </div>
+              <div className="animate-float absolute -right-4 top-16 rounded-2xl border border-white/10 bg-[#12121a]/90 p-4 shadow-xl backdrop-blur-md delay-200">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/20">
+                    <Stethoscope className="h-5 w-5 text-emerald-400" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold">Elite Dental</p>
+                    <p className="text-xs text-zinc-500">Clinic · 4.8 ★</p>
+                  </div>
+                </div>
+              </div>
+              <div className="mx-auto flex h-48 items-center justify-center rounded-3xl border border-white/5 bg-gradient-to-b from-white/[0.04] to-transparent">
+                <Compass className="h-16 w-16 text-[#d4af37]/30" />
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* SERVICES SECTION */}
-      <section id="services" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <div className="text-center space-y-4 max-w-2xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">Premium Treatments for Your Smile</h2>
-            <p className="text-slate-600 text-lg">We offer full-service luxurious dental care using leading technologies and biocompatible materials.</p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              { title: "Cosmetic Dentistry", desc: "Premium porcelain veneers and smile design to reshape your confidence seamlessly." },
-              { title: "Dental Implants", desc: "Lifetime guaranteed titanium implants to restore missing teeth comfortably." },
-              { title: "Teeth Whitening", desc: "Advanced laser whitening systems giving up to 8 shades lighter smiles in an hour." }
-            ].map((service, idx) => (
-              <div key={idx} className="p-8 bg-slate-50 rounded-2xl border border-slate-100 hover:shadow-xl hover:bg-white transition duration-300 space-y-4">
-                <div className="w-12 h-12 bg-blue-600 text-white rounded-xl flex items-center justify-center font-bold text-lg">{idx + 1}</div>
-                <h3 className="text-xl font-bold text-slate-900">{service.title}</h3>
-                <p className="text-slate-600 text-sm leading-relaxed">{service.desc}</p>
-                <a href="#booking" className="text-blue-600 font-semibold text-sm flex items-center gap-1 hover:gap-2 transition pt-2">Learn details & price <ChevronRight size={16} /></a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        {/* Categories */}
+        <section id="categories" className="relative py-20 lg:py-28">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="text-sm font-semibold uppercase tracking-widest text-[#d4af37]">
+                Categories
+              </p>
+              <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
+                Every Industry, One Platform
+              </h2>
+              <p className="mt-4 text-zinc-400">
+                Filter by your needs and instantly discover top-rated, verified
+                businesses near you.
+              </p>
+            </div>
 
-      {/* WHY CHOOSE US */}
-      <section id="why-us" className="py-20 bg-slate-900 text-white relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-5 space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight">Why US Celebrities Choose Our Clinics</h2>
-            <p className="text-slate-400">We redefine dentistry. No pain, no fear. Only elite comfort, premium standards, and unparalleled perfection.</p>
+            <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {CATEGORIES.map((cat, i) => (
+                <article
+                  key={cat.title}
+                  className={`group relative overflow-hidden rounded-2xl border border-white/8 bg-[#12121a] p-6 transition duration-500 hover:-translate-y-1 hover:border-[#d4af37]/30 hover:shadow-lg hover:shadow-[#d4af37]/5 ${visible ? "animate-fade-up opacity-0-start" : "opacity-0-start"}`}
+                  style={{ animationDelay: `${0.1 * i}s` }}
+                >
+                  <div
+                    className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${cat.accent} opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
+                  />
+                  <div className="relative">
+                    <div
+                      className={`flex h-12 w-12 items-center justify-center rounded-xl ${cat.iconBg}`}
+                    >
+                      <cat.icon className="h-6 w-6" />
+                    </div>
+                    <h3 className="mt-5 text-lg font-semibold">{cat.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-zinc-400">
+                      {cat.description}
+                    </p>
+                    <div className="mt-5 flex items-center justify-between">
+                      <span className="text-xs font-medium text-[#d4af37]">
+                        {cat.count} businesses
+                      </span>
+                      <span className="flex items-center gap-1 text-xs text-zinc-500 transition group-hover:text-[#d4af37]">
+                        Explore <ChevronRight className="h-3.5 w-3.5" />
+                      </span>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
-          <div className="lg:col-span-7 grid sm:grid-cols-2 gap-6">
-            {[
-              { icon: <Shield size={24} />, title: "24/7 Premium Emergency", text: "Direct line access for urgent VIP treatments anytime." },
-              { icon: <Award size={24} />, title: "Board Certified Specialists", text: "Top 1% Harvard & Ivy League graduated practitioners." },
-              { icon: <Clock size={24} />, title: "No Waiting Room Policy", text: "We value your schedule. Direct entry to private room." },
-              { icon: <CheckCircle size={24} />, title: "Flexible Insurance Care", text: "Seamless automated premium US insurance processing." }
-            ].map((item, idx) => (
-              <div key={idx} className="p-6 bg-slate-800/50 backdrop-blur rounded-2xl border border-slate-700/40 space-y-3">
-                <div className="text-blue-400">{item.icon}</div>
-                <h4 className="font-bold text-lg">{item.title}</h4>
-                <p className="text-sm text-slate-400 leading-relaxed">{item.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
 
-      {/* TESTIMONIALS */}
-      <section id="testimonials" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <div className="text-center space-y-2">
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">What Our Patients Say</h2>
-            <p className="text-slate-500">Real feedback from verified US business owners and local residents.</p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-8">
-            {[
-              { name: "Sarah Jenkins", role: "Real Estate Executive", text: "The cosmetic smile treatment changed my entire career. The luxury service felt like a 5-star hotel rather than a dental clinic. Absolutely phenomenal team!" },
-              { name: "Michael Vance", role: "Tech Founder", text: "As someone who feared dentists, this clinic blew my mind. Zero pain during my implant surgery. The AI scheduling tool is incredibly fast." }
-            ].map((review, idx) => (
-              <div key={idx} className="p-8 bg-slate-50 rounded-2xl border border-slate-100 space-y-4 relative">
-                <div className="flex text-amber-400 gap-1"><Star size={18} className="fill-current" /><Star size={18} className="fill-current" /><Star size={18} className="fill-current" /><Star size={18} className="fill-current" /><Star size={18} className="fill-current" /></div>
-                <p className="text-slate-600 italic text-sm leading-relaxed">"{review.text}"</p>
-                <div><h4 className="font-bold text-slate-900 text-base">{review.name}</h4><p className="text-xs text-slate-400">{review.role}</p></div>
+        {/* Discover strip */}
+        <section id="discover" className="border-y border-white/5 bg-[#0e0e14] py-16">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="grid items-center gap-10 lg:grid-cols-2">
+              <div>
+                <h2 className="text-2xl font-bold sm:text-3xl">
+                  Location-Based Smart Discovery
+                </h2>
+                <p className="mt-4 text-zinc-400">
+                  View the best venues near you on the map, read reviews, and get
+                  directions with a single tap.
+                </p>
+                <ul className="mt-8 space-y-4">
+                  {[
+                    "Real-time location and distance",
+                    "Verified customer reviews",
+                    "Instant booking and contact",
+                  ].map((item) => (
+                    <li key={item} className="flex items-center gap-3 text-sm text-zinc-300">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#d4af37]/15 text-[#d4af37]">
+                        <MapPin className="h-3.5 w-3.5" />
+                      </span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* INTERACTIVE BOOKING FORM */}
-      <section id="booking" className="py-20 bg-gradient-to-t from-blue-50/50 to-white border-t border-slate-100">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
-          <div className="space-y-3">
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">Secure Your Premium Consultation</h2>
-            <p className="text-slate-600">Fill the instant request below. Our client specialist will reach you within 15 minutes.</p>
-          </div>
-          <div className="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 text-left">
-            {submitted ? (
-              <div className="bg-emerald-50 text-emerald-800 p-6 rounded-2xl text-center space-y-2">
-                <h4 className="font-bold text-lg">✓ Appointment Request Sent!</h4>
-                <p className="text-sm">Our team is reviewing and will text/call you at your provided number within 15 minutes.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1.5 tracking-wider">Full Name</label><input type="text" required className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50/50 text-sm" placeholder="John Doe" /></div>
-                  <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1.5 tracking-wider">Phone Number</label><input type="tel" required className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50/50 text-sm" placeholder="(555) 000-0000" /></div>
+              <div className="relative rounded-2xl border border-white/10 bg-gradient-to-br from-[#1a1a24] to-[#12121a] p-8">
+                <div className="flex items-center gap-2 text-[#d4af37]">
+                  <TrendingUp className="h-5 w-5" />
+                  <span className="text-sm font-medium">Trending This Week</span>
                 </div>
-                <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1.5 tracking-wider">Requested Treatment</label><select className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 bg-slate-50/50 text-sm"><option>Cosmetic Dentistry / Veneers</option><option>Dental Implants</option><option>Laser Teeth Whitening</option><option>General Checkup & Clean</option></select></div>
-                <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-md shadow-blue-100 transition text-sm uppercase tracking-wider">Request Instant Appointment</button>
-              </form>
-            )}
+                <div className="mt-6 space-y-4">
+                  {["Nusr-Et Steakhouse", "Vogue Dental Clinic", "%100 Arabica"].map(
+                    (name, i) => (
+                      <div
+                        key={name}
+                        className="flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3 transition hover:border-[#d4af37]/20"
+                      >
+                        <span className="text-sm font-medium">{name}</span>
+                        <span className="text-xs text-zinc-500">#{i + 1} trending</span>
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* FOOTER */}
-      <footer className="bg-slate-900 text-slate-500 text-xs py-8 border-t border-slate-800 text-center">
-        <p>© 2026 Premium Dental Care Inc. All Rights Reserved. Private VIP Clinic Network USA.</p>
-      </footer>
-    </div>
+        {/* CTA — Join platform */}
+        <section id="join" className="relative py-20 lg:py-28">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="relative overflow-hidden rounded-3xl border border-[#d4af37]/20 bg-gradient-to-br from-[#1a1510] via-[#12121a] to-[#0a0a0f] p-10 sm:p-14 lg:p-16">
+              <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#d4af37]/15 blur-[80px]" />
+              <div className="relative mx-auto max-w-3xl text-center">
+                <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+                  Bring Your Business to{" "}
+                  <span className="text-[#d4af37]">Gladiator</span>
+                </h2>
+                <p className="mx-auto mt-5 max-w-xl text-zinc-400">
+                  Reach thousands of potential customers. Grow your brand with a
+                  premium storefront, analytics dashboard, and priority listings.
+                </p>
+                <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                  <a
+                    href="#join"
+                    className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#d4af37] to-[#b8860b] px-8 py-4 text-base font-bold text-[#0a0a0f] shadow-lg shadow-[#d4af37]/20 transition hover:scale-[1.02] hover:brightness-110 sm:w-auto"
+                  >
+                    Start Free Application
+                    <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
+                  </a>
+                  <a
+                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/15 px-8 py-4 text-base font-medium text-white transition hover:border-[#25D366]/50 hover:bg-[#25D366]/10 sm:w-auto"
+                  >
+                    <MessageCircle className="h-5 w-5 text-[#25D366]" />
+                    Talk to Sales
+                  </a>
+                </div>
+                <p className="mt-6 text-xs text-zinc-600">
+                  First 30 days of premium listing free · No credit card required
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="border-t border-white/5 py-10">
+          <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 text-center text-sm text-zinc-500 sm:flex-row sm:px-6 sm:text-left lg:px-8">
+            <p>
+              © {new Date().getFullYear()} Gladiator. All rights reserved.
+            </p>
+            <p>Discover · Connect · Grow</p>
+          </div>
+        </footer>
+
+        {/* WhatsApp FAB */}
+        <a
+          href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Contact us on WhatsApp"
+          className="animate-pulse-ring group fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/30 transition hover:scale-110 hover:shadow-xl hover:shadow-[#25D366]/40"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="h-7 w-7"
+            aria-hidden
+          >
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+          </svg>
+          <span className="pointer-events-none absolute -top-10 right-0 whitespace-nowrap rounded-lg bg-[#12121a] px-3 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition group-hover:opacity-100">
+            Message us
+          </span>
+        </a>
+      </div>
+    </>
   );
 }
